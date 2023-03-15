@@ -26,25 +26,34 @@ actor Messap {
     timeStamp : Int;
   };
 
+  //Hash.hash is depreciated. so this is the walkaround
   private func natHash(n : Nat) : Hash.Hash {
     Text.hash(Nat.toText(n));
   };
 
+  //users HashMap
   let users = Map.HashMap<Principal, User>(1, Principal.equal, Principal.hash);
 
+  //message HashMap
   let messages = Map.HashMap<Nat, Message>(1, Nat.equal, natHash);
   var id : Nat = 0;
 
+  //friends HashMap
   let friends = Map.HashMap<Principal, [Principal]>(
     1,
     Principal.equal,
     Principal.hash,
   );
 
+
+
   //get principal
+  //for testing purposes
   public shared(msg) func getP() : async Principal {
     msg.caller;
   };
+
+
 
   //add user
   public shared(msg) func addUser(
@@ -69,6 +78,8 @@ actor Messap {
     };
   };
 
+
+
   //edit profile Details
   public shared(msg) func editUser(updateUser : User) : async Text {
 
@@ -92,6 +103,8 @@ actor Messap {
 
   };
 
+
+
   //check whether two people are friends.
   public func isFriend(friend1 : Principal, friend2 : Principal) : async Bool {
     let myFriends = friends.get(friend1);
@@ -114,9 +127,9 @@ actor Messap {
     };
   };
 
-  // add a friend
 
-  //does not check whether you are already friends???????????????
+
+  // add a friend
   public shared(msg) func addFriend(friend : Principal) : async Text {
     let fr = await isFriend(msg.caller, friend);
 
@@ -178,8 +191,9 @@ actor Messap {
     ?myFriends
   };
 
-  //send message
 
+
+  //send message
   public shared(msg) func sendMessage(
     recipient : Principal,
     _message : Text,
@@ -203,6 +217,9 @@ actor Messap {
     }
 
   };
+
+
+  
 
   //get conversation
   public shared(msg) func getConversation(_user2 : Principal) : async [Message] {
