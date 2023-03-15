@@ -1,0 +1,28 @@
+{
+  "canisters": {
+    "SuperDapp_backend": {
+      "main": "src/SuperDapp_backend/main.mo",
+      "type": "motoko"
+    },
+    "SuperDapp_frontend": {
+      "dependencies": [
+        "SuperDapp_backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/SuperDapp_frontend/src/index.html"
+      },
+      "source": [
+        "src/SuperDapp_frontend/assets",
+        "dist/SuperDapp_frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "version": 1
+}
